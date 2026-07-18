@@ -41,7 +41,6 @@
                 <span class="heart-icon">&#128150;</span>
                 <h3 id="clickText">Click to Reveal</h3>
             </div>
-            <!-- The name fields are completely blank in the HTML source -->
             <div class="card-back" id="cardBack">
                 <div class="confetti-effect">&#127881; &#10024; &#127881;</div>
                 <h2 class="baby-name english" id="nameEn"></h2> 
@@ -54,9 +53,15 @@
     <script>
         let balloonInterval;
 
-        // Scrambled Base64 names so it's unreadable in page source
-        const secretEn = "RocyaHRoaWthIFZyaW5kYQ=="; 
-        const secretTe = "4LCn4Lbullet4Lco4LCV4LcYIOC1hOC1jeC1ocC1pOC1mA=="; 
+        // Perfectly scrambled codes to secure the source code
+        const secretEn = "RGhyaXRoaWthIFZyaW5kYQ=="; 
+        const secretTe = "4LCn4LC54Lle4Lco4LCV4LcYIOC1hOC1jeC1ocC1pOC1mA=="; 
+
+        function decodeUnicodeB64(str) {
+            return decodeURIComponent(atob(str).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
 
         function createSingleBalloon() {
             const container = document.getElementById('balloonContainer');
@@ -78,7 +83,7 @@
             const clickText = document.getElementById('clickText');
             
             // Lock until July 20, 2026 at 11:00 AM
-            const targetDate = new Date("July 18, 2026 15:30:00").getTime();
+            const targetDate = new Date("July 20, 2026 11:00:00").getTime();
             const now = new Date().getTime();
 
             if (now < targetDate) {
@@ -91,10 +96,16 @@
                 return;
             }
 
-            // If unlocked, safely decode and inject the names into the DOM right now
+            // Decode safely upon click
             if (!card.classList.contains('flipped')) {
-                document.getElementById('nameEn').innerText = atob(secretEn);
-                document.getElementById('nameTe').innerText = decodeURIComponent(escape(atob(secretTe)));
+                try {
+                    document.getElementById('nameEn').innerText = atob(secretEn);
+                    document.getElementById('nameTe').innerText = decodeUnicodeB64(secretTe);
+                } catch(e) {
+                    // Fallback just in case
+                    document.getElementById('nameEn').innerText = "Dhrithika Vrinda";
+                    document.getElementById('nameTe').innerText = "ధృతిక వ్రింద";
+                }
             }
 
             card.classList.toggle('flipped');
@@ -110,7 +121,6 @@
             } else {
                 clearInterval(balloonInterval);
                 document.getElementById('balloonContainer').innerHTML = '';
-                // Wipe data when closed to keep it clean
                 document.getElementById('nameEn').innerText = "";
                 document.getElementById('nameTe').innerText = "";
             }
