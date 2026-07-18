@@ -8,24 +8,20 @@
 </head>
 <body>
 
-    <!-- Minimal Floating Background Elements -->
+    <div class="balloon-container" id="balloonContainer"></div>
+
     <div class="decorations">
         <div class="star star1">&#10024;</div>
         <div class="star star2">&#10024;</div>
     </div>
 
     <div class="reveal-container">
-        <!-- Minimal Indian Cradle Line Art at the Top -->
         <div class="cradle-top">
             <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
-                <!-- Frame / Arch -->
                 <path d="M20,80 Q20,20 50,20 Q80,20 80,80" fill="none" stroke="#fa709a" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- Hanging Chains -->
                 <line x1="35" y1="28" x2="35" y2="60" stroke="#fa709a" stroke-width="1.5" />
                 <line x1="65" y1="28" x2="65" y2="60" stroke="#fa709a" stroke-width="1.5" />
-                <!-- Cradle Bed -->
                 <rect x="28" y="60" width="44" height="12" rx="4" fill="none" stroke="#fa709a" stroke-width="2.5"/>
-                <!-- Traditional Hanging Tiny Bells/Dots -->
                 <circle cx="50" cy="20" r="3" fill="#e05275"/>
                 <circle cx="35" cy="72" r="2" fill="#e05275"/>
                 <circle cx="50" cy="72" r="2" fill="#e05275"/>
@@ -36,7 +32,6 @@
         <h1>We are excited to announce...</h1>
         <p>Click the heart to reveal our little one's name! &#10024;</p>
         
-        <!-- Expanded Reveal Box -->
         <div class="reveal-card" id="revealCard" onclick="revealName()">
             <div class="card-front">
                 <span class="heart-icon">&#128150;</span>
@@ -52,9 +47,48 @@
     </div>
 
     <script>
+        let balloonInterval;
+
         function revealName() {
             const card = document.getElementById('revealCard');
             card.classList.toggle('flipped');
+            
+            // Check if the card is flipped to the name side
+            if(card.classList.contains('flipped')) {
+                startBalloons();
+            } else {
+                stopBalloons();
+            }
+        }
+
+        function startBalloons() {
+            const container = document.getElementById('balloonContainer');
+            
+            // Generate a balloon every 600ms for a continuous festive stream
+            balloonInterval = setInterval(() => {
+                const balloon = document.createElement('div');
+                balloon.classList.add('floating-balloon');
+                balloon.innerHTML = '&#127880;'; // Balloon Emoji
+                
+                // Randomize horizontal position and sizes slightly
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.fontSize = (Math.random() * 1.5 + 2) + 'rem';
+                
+                // Randomize speed of floating up (between 4s and 7s)
+                balloon.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                
+                container.appendChild(balloon);
+                
+                // Remove balloon from DOM once it goes off-screen to prevent memory issues
+                setTimeout(() => {
+                    balloon.remove();
+                }, 7000);
+            }, 600);
+        }
+
+        function stopBalloons() {
+            clearInterval(balloonInterval);
+            document.getElementById('balloonContainer').innerHTML = '';
         }
     </script>
 </body>
