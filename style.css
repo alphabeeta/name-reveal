@@ -49,15 +49,26 @@ p {
     transition: transform 0.2s ease;
 }
 
-/* Tactile Click Pop Effect */
+/* Unlocked Flip Pop Effect */
 .reveal-card.pop-effect {
     animation: cardPop 0.4s ease-out;
+}
+
+/* Locked Error Shake Effect */
+.reveal-card.shake-effect {
+    animation: cardShake 0.5s ease-in-out;
 }
 
 @keyframes cardPop {
     0% { transform: scale(1); }
     50% { transform: scale(1.08); }
     100% { transform: scale(1); }
+}
+
+@keyframes cardShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
 }
 
 /* Card Sides */
@@ -94,6 +105,7 @@ h3 {
     font-weight: 500;
     color: #8c8c8c;
     margin-top: 15px;
+    transition: all 0.3s ease;
 }
 
 /* Back Side Styling */
