@@ -83,7 +83,7 @@
             const clickText = document.getElementById('clickText');
             
             // Lock until July 20, 2026 at 11:00 AM
-            const targetDate = new Date("July 20, 2026 11:00:00").getTime();
+            const targetDate = new Date("July 18, 2026 15:35:00").getTime();
             const now = new Date().getTime();
 
             if (now < targetDate) {
@@ -103,8 +103,7 @@
                     document.getElementById('nameTe').innerText = decodeUnicodeB64(secretTe);
                 } catch(e) {
                     // Fallback just in case
-                    document.getElementById('nameEn').innerText = "Dhrithika Vrinda";
-                    document.getElementById('nameTe').innerText = "ధృతిక వ్రింద";
+                   
                 }
             }
 
