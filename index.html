@@ -57,12 +57,22 @@
         const babyNameEnglish = "Dhrithika Vrinda";
         const babyNameTelugu = "ధృతిక వ్రింద";
 
+        // Array of vibrant/pastel colors for the dynamic balloons
+        const balloonColors = ['#ff7675', '#74b9ff', '#55efc4', '#ffeaa7', '#a29bfe', '#fd79a8', '#fdcb6e', '#e84393'];
+
         function createSingleBalloon() {
             const container = document.getElementById('balloonContainer');
             const balloon = document.createElement('div');
             balloon.classList.add('floating-balloon');
             balloon.innerHTML = '&#127880;';
             
+            // Pick a random color from the array and apply it using css filter/color properties
+            const randomColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+            balloon.style.color = randomColor;
+            
+            // Text shadows make the emoji reflect the custom color better
+            balloon.style.textShadow = `0 0 10px ${randomColor}`;
+
             balloon.style.left = Math.random() * 100 + 'vw';
             balloon.style.fontSize = (Math.random() * 1.5 + 2) + 'rem';
             balloon.style.animationDuration = (Math.random() * 2.5 + 3.5) + 's';
@@ -77,11 +87,11 @@
             const clickText = document.getElementById('clickText');
             
             // Lock until July 20, 2026 at 11:00 AM
-            const targetDate = new Date("July 18, 2026 15:41:00").getTime();
+            const targetDate = new Date("July 18, 2026 15:42:00").getTime();
             const now = new Date().getTime();
 
             if (now < targetDate) {
-                clickText.innerText = "కొంచెం ఆగుతారా? Till July 20, 11:30 AM";
+                clickText.innerText = "ఆగుతారా?";
                 clickText.style.color = "#e05275";
                 clickText.style.fontSize = "1.5rem";
                 
