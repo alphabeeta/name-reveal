@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Name Reveal!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="reveal-container">
+        <h1>We are excited to announce...</h1>
+        <p>Click the heart to reveal our little one's name! ✨</p>
+        
+        <!-- The Interactive Reveal Box -->
+        <div class="reveal-card" id="revealCard" onclick="revealName()">
+            <div class="card-front">
+                <span class="heart-icon">💖</span>
+                <h3>Click to Reveal</h3>
+            </div>
+            <div class="card-back">
+                <!-- CHANGE THE NAME HERE -->
+                <h2 class="baby-name">Baby Name Here!</h2> 
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function revealName() {
+            const card = document.getElementById('revealCard');
+            card.classList.toggle('flipped');
+        }
+    </script>
+</body>
+</html>
