@@ -32,14 +32,14 @@
             </svg>
         </div>
 
-        <h1>We are excited to announce...</h1>
-        <p>Click the heart to reveal our little one's name! &#10024;</p>
+        <h1 id="headingText">We are excited to announce...</h1>
+        <p id="subText">Click the heart to reveal our little one's name! &#10024;</p>
         
-        <!-- Expanded Reveal Box with Pop Effect Classes -->
+        <!-- Expanded Reveal Box -->
         <div class="reveal-card" id="revealCard" onclick="revealName()">
-            <div class="card-front">
-                <span class="heart-icon">&#128150;</span>
-                <h3>Click to Reveal</h3>
+            <div class="card-front" id="cardFront">
+                <span class="heart-icon" id="heartIcon">&#128150;</span>
+                <h3 id="clickText">Click to Reveal</h3>
             </div>
             <div class="card-back">
                 <div class="confetti-effect">&#127881; &#10024; &#127881;</div>
@@ -59,10 +59,9 @@
             balloon.classList.add('floating-balloon');
             balloon.innerHTML = '&#127880;';
             
-            // Distributed completely across the width of the screen
             balloon.style.left = Math.random() * 100 + 'vw';
             balloon.style.fontSize = (Math.random() * 1.5 + 2) + 'rem';
-            balloon.style.animationDuration = (Math.random() * 2.5 + 3.5) + 's'; // Slightly faster movement
+            balloon.style.animationDuration = (Math.random() * 2.5 + 3.5) + 's';
             
             container.appendChild(balloon);
             
@@ -73,19 +72,40 @@
 
         function revealName() {
             const card = document.getElementById('revealCard');
+            const clickText = document.getElementById('clickText');
+            
+            // Set Target Date: July 20, 2026 at 11:00 AM
+            const targetDate = new Date("July 20, 2026 11:00:00").getTime();
+            const now = new Date().getTime();
+
+            // IF locked (current time is before target time)
+            if (now < targetDate) {
+                // Change subtext temporarily to Telugu prompt
+                clickText.innerText = "ఆగుతారా?";
+                clickText.style.color = "#e05275";
+                clickText.style.fontSize = "1.5rem";
+                
+                // Trigger an error shake animation
+                card.classList.add('shake-effect');
+                setTimeout(() => {
+                    card.classList.remove('shake-effect');
+                }, 5000);
+                return; // Stop execution here so it doesn't flip
+            }
+
+            // IF unlocked (after July 20, 11 AM)
             card.classList.toggle('flipped');
             
             if(card.classList.contains('flipped')) {
-                // 1. Add instant tactile click feedback effect
                 card.classList.add('pop-effect');
                 setTimeout(() => card.classList.remove('pop-effect'), 400);
 
-                // 2. Launch an immediate burst of balloons with no delay
+                // Immediate balloon burst
                 for (let i = 0; i < 8; i++) {
                     setTimeout(createSingleBalloon, i * 50);
                 }
                 
-                // 3. Keep the stream flowing steadily right after
+                // Continuous balloon flow
                 balloonInterval = setInterval(createSingleBalloon, 350); 
             } else {
                 clearInterval(balloonInterval);
