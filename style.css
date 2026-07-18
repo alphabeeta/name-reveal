@@ -33,8 +33,8 @@ p {
 
 /* ENLARGED FLIP CARD CONTAINER */
 .reveal-card {
-    width: 400px;  /* Increased from 320px */
-    height: 280px; /* Increased from 220px */
+    width: 400px;  
+    height: 280px; 
     margin: 0 auto;
     perspective: 1000px;
     cursor: pointer;
