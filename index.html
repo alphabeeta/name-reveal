@@ -8,14 +8,17 @@
 </head>
 <body>
 
+    <!-- Container for the dynamic balloon stream -->
     <div class="balloon-container" id="balloonContainer"></div>
 
+    <!-- Minimal Floating Stars -->
     <div class="decorations">
         <div class="star star1">&#10024;</div>
         <div class="star star2">&#10024;</div>
     </div>
 
     <div class="reveal-container">
+        <!-- Minimal Indian Cradle Line Art -->
         <div class="cradle-top">
             <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20,80 Q20,20 50,20 Q80,20 80,80" fill="none" stroke="#fa709a" stroke-width="2.5" stroke-linecap="round"/>
@@ -32,6 +35,7 @@
         <h1>We are excited to announce...</h1>
         <p>Click the heart to reveal our little one's name! &#10024;</p>
         
+        <!-- Expanded Reveal Box with Pop Effect Classes -->
         <div class="reveal-card" id="revealCard" onclick="revealName()">
             <div class="card-front">
                 <span class="heart-icon">&#128150;</span>
@@ -49,46 +53,44 @@
     <script>
         let balloonInterval;
 
+        function createSingleBalloon() {
+            const container = document.getElementById('balloonContainer');
+            const balloon = document.createElement('div');
+            balloon.classList.add('floating-balloon');
+            balloon.innerHTML = '&#127880;';
+            
+            // Distributed completely across the width of the screen
+            balloon.style.left = Math.random() * 100 + 'vw';
+            balloon.style.fontSize = (Math.random() * 1.5 + 2) + 'rem';
+            balloon.style.animationDuration = (Math.random() * 2.5 + 3.5) + 's'; // Slightly faster movement
+            
+            container.appendChild(balloon);
+            
+            setTimeout(() => {
+                balloon.remove();
+            }, 6000);
+        }
+
         function revealName() {
             const card = document.getElementById('revealCard');
             card.classList.toggle('flipped');
             
-            // Check if the card is flipped to the name side
             if(card.classList.contains('flipped')) {
-                startBalloons();
+                // 1. Add instant tactile click feedback effect
+                card.classList.add('pop-effect');
+                setTimeout(() => card.classList.remove('pop-effect'), 400);
+
+                // 2. Launch an immediate burst of balloons with no delay
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(createSingleBalloon, i * 50);
+                }
+                
+                // 3. Keep the stream flowing steadily right after
+                balloonInterval = setInterval(createSingleBalloon, 350); 
             } else {
-                stopBalloons();
+                clearInterval(balloonInterval);
+                document.getElementById('balloonContainer').innerHTML = '';
             }
-        }
-
-        function startBalloons() {
-            const container = document.getElementById('balloonContainer');
-            
-            // Generate a balloon every 600ms for a continuous festive stream
-            balloonInterval = setInterval(() => {
-                const balloon = document.createElement('div');
-                balloon.classList.add('floating-balloon');
-                balloon.innerHTML = '&#127880;'; // Balloon Emoji
-                
-                // Randomize horizontal position and sizes slightly
-                balloon.style.left = Math.random() * 100 + 'vw';
-                balloon.style.fontSize = (Math.random() * 1.5 + 2) + 'rem';
-                
-                // Randomize speed of floating up (between 4s and 7s)
-                balloon.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                
-                container.appendChild(balloon);
-                
-                // Remove balloon from DOM once it goes off-screen to prevent memory issues
-                setTimeout(() => {
-                    balloon.remove();
-                }, 7000);
-            }, 600);
-        }
-
-        function stopBalloons() {
-            clearInterval(balloonInterval);
-            document.getElementById('balloonContainer').innerHTML = '';
         }
     </script>
 </body>
