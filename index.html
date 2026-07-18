@@ -53,15 +53,9 @@
     <script>
         let balloonInterval;
 
-        // Perfectly scrambled codes to secure the source code
-        const secretEn = "RGhyaXRoaWthIFZyaW5kYQ=="; 
-        const secretTe = "4LCn4LC54Lle4Lco4LCV4LcYIOC1hOC1jeC1ocC1pOC1mA=="; 
-
-        function decodeUnicodeB64(str) {
-            return decodeURIComponent(atob(str).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-        }
+        // Names stored in plain text variables
+        const babyNameEnglish = "Dhrithika Vrinda";
+        const babyNameTelugu = "ధృతిక వ్రింద";
 
         function createSingleBalloon() {
             const container = document.getElementById('balloonContainer');
@@ -83,7 +77,7 @@
             const clickText = document.getElementById('clickText');
             
             // Lock until July 20, 2026 at 11:00 AM
-            const targetDate = new Date("July 18, 2026 15:35:00").getTime();
+            const targetDate = new Date("July 20, 2026 11:00:00").getTime();
             const now = new Date().getTime();
 
             if (now < targetDate) {
@@ -96,15 +90,10 @@
                 return;
             }
 
-            // Decode safely upon click
+            // Inject the names dynamically on click if unlocked
             if (!card.classList.contains('flipped')) {
-                try {
-                    document.getElementById('nameEn').innerText = atob(secretEn);
-                    document.getElementById('nameTe').innerText = decodeUnicodeB64(secretTe);
-                } catch(e) {
-                    // Fallback just in case
-                   
-                }
+                document.getElementById('nameEn').innerText = babyNameEnglish;
+                document.getElementById('nameTe').innerText = babyNameTelugu;
             }
 
             card.classList.toggle('flipped');
